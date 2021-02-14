@@ -66,4 +66,4 @@ python manage.py loaddata fixtures.json
 
 * **Fedor Mityanin** - [Fyodor-Mityanin](https://github.com/Fyodor-Mityanin)
 
-https://github.com/Fyodor-Mityanin/yamdb_final/workflows/YaMDB_final_workflow/badge.svg
+[Workflow badge](https://github.com/Fyodor-Mityanin/yamdb_final/workflows/YaMDB_final%20workflow/badge.svg)
