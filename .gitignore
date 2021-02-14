@@ -3,6 +3,8 @@ env/
 venv/
 .venv
 .venv/
+yamdb_final_venv/
+.env
 
 __pycache__/
 *.py[cod]
