@@ -20,7 +20,7 @@ jobs:
         pip install -r requirements.txt
 
     - name: Lint with flake8
-      run: flake8 .
+      run: flake8 . --max-line-length 119 --exclude yamdb_final_venv,migrations,tests
 
     - name: Test with pytest
       run: pytest tests.py
@@ -43,7 +43,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           push: true
-          tags: fedormityanin/flask_app:latest
+          tags: fedormityanin/yamdb_final:latest
   deploy:
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
