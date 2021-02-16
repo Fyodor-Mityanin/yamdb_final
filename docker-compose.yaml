@@ -13,6 +13,7 @@ services:
       - ./.env
   web:
     image: fedormityanin/yamdb_final:latest
+#    build: .
     restart: always
     ports:
       - "8000:8000"
@@ -23,7 +24,7 @@ services:
   nginx:
     image: nginx:1.19.6
     volumes:
-      - ./templates:/etc/nginx/templates
+      - static:/static
     ports:
       - "8080:80"
     environment:
