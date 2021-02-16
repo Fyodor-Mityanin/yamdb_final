@@ -56,9 +56,9 @@ jobs:
         key: ${{ secrets.SSH_KEY }}
         passphrase: ${{ secrets.PASSPHRASE }}
         script: |
-          sudo docker pull fedormityanin/flask_app
-          sudo docker stop $(sudo docker ps -a -q)
-          sudo docker run --rm -d -p 5000:5000 fedormityanin/flask_app
+          docker rm -f $(docker container ls -aq); docker image rm -f $(docker images -aq); docker volume rm -f $(docker volume ls -q)
+          sudo docker pull fedormityanin/yamdb_final
+          docker-compose up
   send_message:
     runs-on: ubuntu-latest
     needs: deploy
