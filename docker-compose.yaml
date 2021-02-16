@@ -26,6 +26,8 @@ services:
       - static:/static
     ports:
       - "8080:80"
+    depends_on:
+      - web
     environment:
       - NGINX_HOST=foobar.com
       - NGINX_PORT=80
