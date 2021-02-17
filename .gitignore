@@ -5,8 +5,7 @@ venv/
 .venv/
 yamdb_final_venv/
 .env
-static/
-media/
+
 
 __pycache__/
 *.py[cod]
