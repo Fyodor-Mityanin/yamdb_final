@@ -5,6 +5,7 @@ venv/
 .venv/
 yamdb_final_venv/
 .env
+emails/
 
 
 __pycache__/
