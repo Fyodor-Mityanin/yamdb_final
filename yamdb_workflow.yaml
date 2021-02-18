@@ -8,6 +8,7 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2
+
     - name: Set up Python 
       uses: actions/setup-python@v2
       with:
@@ -23,42 +24,63 @@ jobs:
       run: flake8 . --max-line-length 119 --exclude yamdb_final_venv,migrations,tests
 
     - name: Test with pytest
-      run: pytest tests.py
+      run: pytest
   
   build_and_push_to_docker_hub:
+    if: github.ref == 'refs/heads/master'
     name: Push Docker image to Docker Hub
     runs-on: ubuntu-latest
     needs: tests
     steps:
       - name: Check out the repo
         uses: actions/checkout@v2
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
+
       - name: Login to Docker
         uses: docker/login-action@v1
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
+
       - name: Push to Docker Hub
         uses: docker/build-push-action@v2
         with:
           push: true
           tags: fedormityanin/yamdb_final:latest
+
   deploy:
+    if: github.ref == 'refs/heads/master'
     runs-on: ubuntu-latest
     needs: build_and_push_to_docker_hub
     steps:
-    - name: executing remote ssh commands to deploy
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USER }}
-        key: ${{ secrets.SSH_KEY }}
-        passphrase: ${{ secrets.PASSPHRASE }}
-        script: |
-          sudo docker pull fedormityanin/flask_app
-          sudo docker stop $(sudo docker ps -a -q)
-          sudo docker run --rm -d -p 5000:5000 fedormityanin/flask_app
+      - name: Check out the repo
+        uses: actions/checkout@v2
+
+      - name: copy file via ssh password
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          source: "docker-compose.yaml, nginx/default.conf, static, media"
+          target: "~"
+
+      - name: executing remote ssh commands to deploy
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_KEY }}
+          passphrase: ${{ secrets.PASSPHRASE }}
+          script: | # я перед отправкой забыл скопировать настоящий воркфлоу файл в корень, а про .env не понял
+            sudo docker-compose stop
+            sudo docker stop $(sudo docker ps -a -q) && sudo docker rm $(sudo docker ps -a -q) && sudo docker rmi $(sudo docker images -q)
+            sudo docker pull fedormityanin/yamdb_final:latest
+            sudo docker-compose up -d
+
   send_message:
     runs-on: ubuntu-latest
     needs: deploy
