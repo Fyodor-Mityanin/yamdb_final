@@ -1,4 +1,5 @@
 # API YAmdb
+[Workflow badge](https://github.com/Fyodor-Mityanin/yamdb_final/workflows/YaMDB_final%20workflow/badge.svg)
 
 This is a training project from the Yandex Prakticum
 
@@ -51,7 +52,14 @@ You can also fill DB from fixtures.json file
 
 ```
 python manage.py loaddata fixtures.json
+
 ```
+
+## Project avalible at
+
+[Redoc](http://130.193.52.84/redoc/) - This is redoc page, you can read about YaMDB_API
+[Admin](http://130.193.52.84/admin/) - This is admin login page
+
 
 ## Built With
 
@@ -65,5 +73,3 @@ python manage.py loaddata fixtures.json
 ## Authors
 
 * **Fedor Mityanin** - [Fyodor-Mityanin](https://github.com/Fyodor-Mityanin)
-
-[Workflow badge](https://github.com/Fyodor-Mityanin/yamdb_final/workflows/YaMDB_final%20workflow/badge.svg)
