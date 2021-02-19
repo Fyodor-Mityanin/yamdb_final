@@ -59,6 +59,7 @@ python manage.py loaddata fixtures.json
 
 [Redoc](http://130.193.52.84/redoc/) - This is redoc page, you can read about YaMDB_API
 [Admin](http://130.193.52.84/admin/) - This is admin login page
+[API](http://130.193.52.84/api/v1/titles/) - You can check how API works
 
 
 ## Built With

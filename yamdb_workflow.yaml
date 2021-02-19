@@ -75,10 +75,8 @@ jobs:
           username: ${{ secrets.USER }}
           key: ${{ secrets.SSH_KEY }}
           passphrase: ${{ secrets.PASSPHRASE }}
-          script: | # я перед отправкой забыл скопировать настоящий воркфлоу файл в корень, а про .env не понял
-            sudo docker-compose stop
-            sudo docker stop $(sudo docker ps -a -q) && sudo docker rm $(sudo docker ps -a -q) && sudo docker rmi $(sudo docker images -q)
-            sudo docker pull fedormityanin/yamdb_final:latest
+          script: |
+            sudo docker-compose down -rmi all
             sudo docker-compose up -d
 
   send_message:
